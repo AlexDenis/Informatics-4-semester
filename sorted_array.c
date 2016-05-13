@@ -26,5 +26,15 @@ struct array
 	int datalen;
 };
 
+void print_exit_message ()
+{
+	if (arrays_count == 0) printf ("%s", OK_EXITING);
+	else printf ("%s", NOT_OK_EXITING);
+}
 
+int pointer_valid (struct array* inp)
+{
+	if (inp != 0) return 1;
+	else return 0;
+}
 
