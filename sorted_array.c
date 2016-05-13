@@ -64,3 +64,18 @@ int change_memsz (struct array* inp, int newmemlen)
 	
 	return 1;
 }
+
+int init_array (struct array* inp)
+{
+	check (pointer_valid (inp))
+	
+	inp -> data    = 0;
+	inp -> memlen  = 0;
+	inp -> datalen = 0;
+	
+	int suc = change_memsz (inp, DEF_LEN);
+	
+	arrays_count ++;
+	
+	return suc;
+}
