@@ -79,3 +79,14 @@ int init_array (struct array* inp)
 	
 	return suc;
 }
+
+int zero_array (struct array* inp)
+{
+	check (pointer_valid (inp))
+	
+	int i = 0;
+	for (; i < inp -> datalen; i ++) inp -> data [i] = 0;
+	inp -> datalen = 0;
+	
+	return 1;
+}
