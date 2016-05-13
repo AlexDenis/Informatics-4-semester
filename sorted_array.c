@@ -38,3 +38,29 @@ int pointer_valid (struct array* inp)
 	else return 0;
 }
 
+int change_memsz (struct array* inp, int newmemlen)
+{
+	check (pointer_valid (inp))
+	
+	if (newmemlen > MAX_DATASZ)
+	{
+		fprintf (stderr, ERRORS [UNABLE_TO_ALLOCATE_MEMORY],newmemlen, MAX_DATASZ);
+		
+		return 0;
+	}
+	
+	if (inp -> memlen == 0)
+	{
+		inp -> data = (TYPE*) malloc (sizeof (TYPE) * newmemlen);
+		inp -> memlen = newmemlen;
+	}
+	
+	else
+	{
+		printf ("reallocating with new mem len %i\n", newmemlen);
+		inp -> data = (TYPE*) realloc (inp -> data, newmemlen * sizeof (TYPE));
+		inp -> memlen = newmemlen;
+	}
+	
+	return 1;
+}
