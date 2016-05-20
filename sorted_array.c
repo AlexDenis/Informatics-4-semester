@@ -161,6 +161,18 @@ int add_element (struct array* inp, TYPE new_element)
     return success;
 }
 
+int remove_element (struct array* inp, int pos)
+{
+   check (pointer_valid (inp))
+    
+   for (int i = pos; i < inp -> datalen; i++) 
+   {
+       inp -> data [i] = inp -> data [i+1];
+   }
+   inp -> datalen--;        
+        
+   return 1;
+}
 int get_datalen (struct array* inp)
 {
 	check (pointer_valid (inp))
