@@ -90,3 +90,16 @@ int zero_array (struct array* inp)
 	
 	return 1;
 }
+
+int delete_array (struct array* inp)
+{
+	check (pointer_valid (inp))
+	
+	free (inp -> data);
+	inp -> datalen = 0;
+	inp -> memlen  = 0;
+	
+	arrays_count --;
+	
+	return 1;
+}
