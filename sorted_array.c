@@ -103,3 +103,10 @@ int delete_array (struct array* inp)
 	
 	return 1;
 }
+
+int get_datalen (struct array* inp)
+{
+	check (pointer_valid (inp))
+	
+	return inp -> datalen;
+}
