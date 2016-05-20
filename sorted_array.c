@@ -110,3 +110,10 @@ int get_datalen (struct array* inp)
 	
 	return inp -> datalen;
 }
+
+int get_memlen (struct array* inp)
+{
+	check (pointer_valid (inp))
+	
+	return inp -> memlen;
+}
