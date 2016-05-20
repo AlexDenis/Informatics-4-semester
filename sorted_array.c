@@ -129,8 +129,37 @@ int find_element(struct array* inp, TYPE element_to_be_found)
  
       middle = (first + last)/2;
     }
+    
     if (first > last) 
         fprintf (stderr, ERRORS [ELEMENT_NOT_FOUND], element_to_be_found);  
+    
+    return 1;
+}
+
+int add_element (struct array* inp, TYPE new_element)
+{
+    check (pointer_valid (inp))
+	
+	int success = 1;
+	
+	if (inp -> datalen + 1 >= inp -> memlen)
+		{
+		success = change_memsz (inp, inp -> memlen + MEM_STEP);
+		}
+	
+	inp -> datalen ++;
+	//if (success == 1) inp -> data [inp -> datalen ++] = new_element;          
+	
+	int i = inp->datalenж
+	while ((i > 0) && (new_element < inp -> data [i - 1]))
+    {   
+      inp -> data [i] = inp-> data [i - 1];
+      i = i - 1;
+    }
+    inp -> data [i] = new_element;
+    
+    return success;
+}
 
 int get_datalen (struct array* inp)
 {
