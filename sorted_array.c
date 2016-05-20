@@ -133,3 +133,20 @@ int print_element (struct array* inp, int ind)
 	
 	return 1;
 }
+
+int print_array (struct array* inp)
+{
+	check (pointer_valid (inp))
+	
+	int i = 0;
+	
+	for (; i < inp -> datalen; i ++)
+	{
+		print_element (inp, i);
+		printf (" ");
+	}
+	
+	printf ("\n");
+	
+	return 1;
+}
