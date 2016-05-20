@@ -117,3 +117,19 @@ int get_memlen (struct array* inp)
 	
 	return inp -> memlen;
 }
+
+int print_element (struct array* inp, int ind)
+{
+	check (pointer_valid (inp))
+	
+	if (ind >= inp -> datalen)
+	{
+		printf (ERRORS [GARBAGE_READ], ind, inp -> datalen);
+		
+		return 0;
+	}
+	
+	printf ("%i", inp -> data [ind]);
+	
+	return 1;
+}
