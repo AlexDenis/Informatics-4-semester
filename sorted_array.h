@@ -10,8 +10,9 @@ int init_array (struct array* inp);
 int delete_array (struct array* inp);
 
 //WORK WITH DATA
-//int add_element (struct array* inp, TYPE new_element);
-//int remove_element (struct array* inp, TYPE deleted_element);
+int add_element (struct array* inp, TYPE new_element);
+int remove_element (struct array* inp, int position);
+int find_element(struct array* inp, TYPE element_to_be_found);       
 int change_element (struct array* inp, int ind, TYPE new_element);
 int zero_array (struct array* inp);
 
