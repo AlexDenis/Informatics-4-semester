@@ -12,12 +12,14 @@ const int MAX_DATASZ = 301;
 enum {UNABLE_TO_ALLOCATE_MEMORY,
       ELEMENT_NOT_ADDED,
       WRITE_TO_UNALLOCATED_MEMORY,
-      GARBAGE_READ};
+      GARBAGE_READ,
+      ELEMENT_NOT_FOUND};
       
 const char* ERRORS [] = {"Unable to allocate memory for %i elements, max count is %i.\n",
 			 "Element not added.\n",
 			 "Trying to write to unallocated memory - element %i. Max number is %i. I'll drop that.\n",
-			 "Trying to read garbage from not filled memory at index %i. Max ind %i.\n"};
+			 "Trying to read garbage from not filled memory at index %i. Max ind %i.\n",
+			 "Element %i not found.\n"};
 
 struct array
 {
@@ -104,6 +106,32 @@ int delete_array (struct array* inp)
 	return 1;
 }
 
+int find_element(struct array* inp, TYPE element_to_be_found)
+{
+    check (pointer_valid (inp))
+    
+    first = 0;
+    last = (inp -> datalen) - 1
+    middle = (first+last)/2;
+    
+    while (first <= last)
+    {
+        if (inp -> data [middle] < element_to_be_found) 
+            first = middle + 1;
+            
+        else if (inp -> data[middle] == search) 
+        {
+            printf("%d found at location %d.\n", search, middle+1);
+            break;
+        }
+        
+        else last = middle - 1;
+ 
+      middle = (first + last)/2;
+    }
+    if (first > last) 
+        fprintf (stderr, ERRORS [ELEMENT_NOT_FOUND], element_to_be_found);  
+
 int get_datalen (struct array* inp)
 {
 	check (pointer_valid (inp))
@@ -157,7 +185,8 @@ int verbose_full_print (struct array* inp)
 	
 	printf ("---------------------------------------------------------------\n");
 	printf ("Printing data about obj at %x: \nAllocated memory %i bytes (for %i elements), used %i b, %i el.\n",
-		    /*(unsigned int)*/ inp, (inp -> memlen) * sizeof (TYPE), inp -> memlen, (inp -> datalen) * sizeof (TYPE), inp ->           datalen);
+		    /*(unsigned int)*/ inp, (inp -> memlen) * sizeof (TYPE), inp -> memlen, (inp -> datalen) * sizeof (TYPE), 
+		    inp -> datalen);
 	printf ("Printing data in the array:\n");
 	print_array (inp);
 	
