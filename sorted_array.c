@@ -150,3 +150,16 @@ int print_array (struct array* inp)
 	
 	return 1;
 }
+
+int verbose_full_print (struct array* inp)
+{
+	check (pointer_valid (inp))
+	
+	printf ("---------------------------------------------------------------\n");
+	printf ("Printing data about obj at %x: \nAllocated memory %i bytes (for %i elements), used %i b, %i el.\n",
+		    /*(unsigned int)*/ inp, (inp -> memlen) * sizeof (TYPE), inp -> memlen, (inp -> datalen) * sizeof (TYPE), inp ->           datalen);
+	printf ("Printing data in the array:\n");
+	print_array (inp);
+	
+	return 1;
+}
