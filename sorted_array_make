@@ -1,2 +1,4 @@
 all:
 	gcc -fprofile-arcs -ftest-coverage -std=c99 1task.c sorted_array.h -o 1task
+	valgrind --leak-check=full --leak-resolution=med ./1task
+    gcov -b ./1task.c | tee output.txt
