@@ -1,13 +1,21 @@
 #include "stdio.h"
 #include "malloc.h"
 #include "assert.h"
-#include "array.h"
+#include "sorted_array.h"
 
 #define check(COND) { if (COND) { } else { fprintf (stderr, "Condition '%s' is false!\n", #COND); assert (0); } }
+
+//gcc -fprofile-arcs -ftest-coverage -std=c99 1task.c -o 1task
+//gcov -b ./1task.c | tee output.txt
+// valgrind --leak-check=full --leak-resolution=med ./1task
 
 const int DEF_LEN    = 10;
 const int MEM_STEP   = 10;
 const int MAX_DATASZ = 301; 
+
+int arrays_count = 0;
+const char* OK_EXITING = "You've deleted all the arrays.\n";
+const char* NOT_OK_EXITING = "You've not deleted all the arrays.\n'";
 
 enum {UNABLE_TO_ALLOCATE_MEMORY,
       ELEMENT_NOT_ADDED,
@@ -46,14 +54,14 @@ int change_memsz (struct array* inp, int newmemlen)
 	
 	if (newmemlen > MAX_DATASZ)
 	{
-		fprintf (stderr, ERRORS [UNABLE_TO_ALLOCATE_MEMORY],newmemlen, MAX_DATASZ);
+		fprintf (stderr, ERRORS [UNABLE_TO_ALLOCATE_MEMORY], newmemlen, MAX_DATASZ);
 		
 		return 0;
 	}
 	
-	if (inp -> memlen == 0)
+	else if (inp -> memlen == 0)
 	{
-		inp -> data = (TYPE*) malloc (sizeof (TYPE) * newmemlen);
+		inp -> data = (TYPE*) calloc (newmemlen, sizeof(TYPE));
 		inp -> memlen = newmemlen;
 	}
 	
@@ -95,7 +103,7 @@ int zero_array (struct array* inp)
 
 int delete_array (struct array* inp)
 {
-	check (pointer_valid (inp))
+	//check (pointer_valid (inp))
 	
 	free (inp -> data);
 	inp -> datalen = 0;
@@ -110,18 +118,18 @@ int find_element(struct array* inp, TYPE element_to_be_found)
 {
     check (pointer_valid (inp))
     
-    first = 0;
-    last = (inp -> datalen) - 1
-    middle = (first+last)/2;
+    int first = 0;
+    int last = (inp -> datalen) - 1;
+    int middle = (first+last)/2;
     
     while (first <= last)
     {
         if (inp -> data [middle] < element_to_be_found) 
             first = middle + 1;
             
-        else if (inp -> data[middle] == search) 
+        else if (inp -> data[middle] == element_to_be_found) 
         {
-            printf("%d found at location %d.\n", search, middle+1);
+            printf("%d found at location %d.\n", element_to_be_found, middle);
             break;
         }
         
@@ -143,22 +151,26 @@ int add_element (struct array* inp, TYPE new_element)
 	int success = 1;
 	
 	if (inp -> datalen + 1 >= inp -> memlen)
-		{
+	{
 		success = change_memsz (inp, inp -> memlen + MEM_STEP);
-		}
+	}
 	
-	inp -> datalen ++;
-	//if (success == 1) inp -> data [inp -> datalen ++] = new_element;          
+	if (success == 1)
+	{
+	    inp -> datalen ++;        
 	
-	int i = inp->datalenж
-	while ((i > 0) && (new_element < inp -> data [i - 1]))
-    {   
-      inp -> data [i] = inp-> data [i - 1];
-      i = i - 1;
+	    int i = inp->datalen;
+	    while ((i > 0) && (new_element < inp -> data [i - 1]))
+        {   
+            inp -> data [i] = inp-> data [i - 1];
+            i = i - 1;
+        }
+    
+        inp -> data [i] = new_element;
     }
-    inp -> data [i] = new_element;
     
     return success;
+    
 }
 
 int remove_element (struct array* inp, int pos)
@@ -173,6 +185,23 @@ int remove_element (struct array* inp, int pos)
         
    return 1;
 }
+
+int change_element (struct array* inp, int ind, TYPE new_element)           
+{
+	check (pointer_valid (inp))
+	if (ind >= inp -> memlen)
+	{
+		printf (ERRORS [WRITE_TO_UNALLOCATED_MEMORY], ind, inp -> datalen);
+		return 0;
+	}
+		
+	else 	
+	{
+		inp -> data [ind] = new_element;
+		return 1;
+	}
+}
+
 int get_datalen (struct array* inp)
 {
 	check (pointer_valid (inp))
