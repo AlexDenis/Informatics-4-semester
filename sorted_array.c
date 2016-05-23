@@ -1,3 +1,4 @@
+// test после каждого check'a, код выполнения без ошибки в ENUM
 #include "stdio.h"
 #include "malloc.h"
 #include "assert.h"
@@ -7,7 +8,7 @@
 
 //gcc -fprofile-arcs -ftest-coverage -std=c99 1task.c -o 1task
 //gcov -b ./1task.c | tee output.txt
-// valgrind --leak-check=full --leak-resolution=med ./1task
+//valgrind --leak-check=full --leak-resolution=med ./1task
 
 const int DEF_LEN    = 10;
 const int MEM_STEP   = 10;
@@ -17,17 +18,23 @@ int arrays_count = 0;
 const char* OK_EXITING = "You've deleted all the arrays.\n";
 const char* NOT_OK_EXITING = "You've not deleted all the arrays.\n'";
 
-enum {UNABLE_TO_ALLOCATE_MEMORY,
+enum {SUCCESFULLY_CREATED,
+	  NO_ERRORS,
+	  UNABLE_TO_ALLOCATE_MEMORY,
       ELEMENT_NOT_ADDED,
       WRITE_TO_UNALLOCATED_MEMORY,
       GARBAGE_READ,
-      ELEMENT_NOT_FOUND};
+      ELEMENT_NOT_FOUND,
+      INVALID_POINTER};
       
-const char* ERRORS [] = {"Unable to allocate memory for %i elements, max count is %i.\n",
-			 "Element not added.\n",
-			 "Trying to write to unallocated memory - element %i. Max number is %i. I'll drop that.\n",
-			 "Trying to read garbage from not filled memory at index %i. Max ind %i.\n",
-			 "Element %i not found.\n"};
+const char* ERRORS [] = {"Massive was succesfully created",
+						 "No errors occured",
+			 			 "Unable to allocate memory for %i elements, max count is %i\n",
+						 "Element not added",
+						 "Trying to write to unallocated memory - element %i. Max number is %i.\n",
+						 "Trying to read garbage from not filled memory at index %i. Max ind %i",
+						 "Element %i not found", 
+						 "You've got invalid pointer"};
 
 struct array
 {
@@ -45,7 +52,7 @@ void print_exit_message ()
 int pointer_valid (struct array* inp)
 {
 	if (inp != 0) return 1;
-	else return 0;
+	else return INVALID_POINTER;
 }
 
 int change_memsz (struct array* inp, int newmemlen)
@@ -55,8 +62,7 @@ int change_memsz (struct array* inp, int newmemlen)
 	if (newmemlen > MAX_DATASZ)
 	{
 		fprintf (stderr, ERRORS [UNABLE_TO_ALLOCATE_MEMORY], newmemlen, MAX_DATASZ);
-		
-		return 0;
+		return UNABLE_TO_ALLOCATE_MEMORY;
 	}
 	
 	else if (inp -> memlen == 0)
@@ -72,7 +78,7 @@ int change_memsz (struct array* inp, int newmemlen)
 		inp -> memlen = newmemlen;
 	}
 	
-	return 1;
+	return NO_ERRORS;
 }
 
 int init_array (struct array* inp)
@@ -98,7 +104,7 @@ int zero_array (struct array* inp)
 	for (; i < inp -> datalen; i ++) inp -> data [i] = 0;
 	inp -> datalen = 0;
 	
-	return 1;
+	return NO_ERRORS;
 }
 
 int delete_array (struct array* inp)
@@ -111,7 +117,7 @@ int delete_array (struct array* inp)
 	
 	arrays_count --;
 	
-	return 1;
+	return NO_ERRORS;
 }
 
 int find_element(struct array* inp, TYPE element_to_be_found)
@@ -140,13 +146,14 @@ int find_element(struct array* inp, TYPE element_to_be_found)
     
     if (first > last) 
         fprintf (stderr, ERRORS [ELEMENT_NOT_FOUND], element_to_be_found);  
+        return ELEMENT_NOT_FOUND;
     
-    return 1;
+    return NO_ERRORS;
 }
 
 int add_element (struct array* inp, TYPE new_element)
 {
-    check (pointer_valid (inp))
+    if (!pointer_valid (inp)) return INVALID_POINTER;
 	
 	int success = 1;
 	
@@ -169,7 +176,7 @@ int add_element (struct array* inp, TYPE new_element)
         inp -> data [i] = new_element;
     }
     
-    return success;
+    return NO_ERRORS;
     
 }
 
@@ -183,7 +190,7 @@ int remove_element (struct array* inp, int pos)
    }
    inp -> datalen--;        
         
-   return 1;
+   return NO_ERRORS;
 }
 
 int change_element (struct array* inp, int ind, TYPE new_element)           
@@ -192,13 +199,13 @@ int change_element (struct array* inp, int ind, TYPE new_element)
 	if (ind >= inp -> memlen)
 	{
 		printf (ERRORS [WRITE_TO_UNALLOCATED_MEMORY], ind, inp -> datalen);
-		return 0;
+		return WRITE_TO_UNALLOCATED_MEMORY;
 	}
 		
 	else 	
 	{
 		inp -> data [ind] = new_element;
-		return 1;
+		return NO_ERRORS;
 	}
 }
 
@@ -224,12 +231,12 @@ int print_element (struct array* inp, int ind)
 	{
 		printf (ERRORS [GARBAGE_READ], ind, inp -> datalen);
 		
-		return 0;
+		return GARBAGE_READ;
 	}
 	
 	printf ("%i", inp -> data [ind]);
 	
-	return 1;
+	return NO_ERRORS;
 }
 
 int print_array (struct array* inp)
@@ -246,7 +253,7 @@ int print_array (struct array* inp)
 	
 	printf ("\n");
 	
-	return 1;
+	return NO_ERRORS;
 }
 
 int verbose_full_print (struct array* inp)
@@ -260,5 +267,5 @@ int verbose_full_print (struct array* inp)
 	printf ("Printing data in the array:\n");
 	print_array (inp);
 	
-	return 1;
+	return NO_ERRORS;
 }
