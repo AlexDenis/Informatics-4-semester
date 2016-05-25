@@ -1,5 +1,10 @@
 #include "sorted_array_2.h"
 
+class memexc   		 : public exception { const char * what () const throw () { return "Unable to allocate requested memory.																					\n"; } };
+class addexc         : public exception { const char * what () const throw () { return "Element not added.\n"; } };
+class unallocmemexc  : public exception { const char * what () const throw () { return "Trying to write to unallocated 																							memory.\n"; } };
+class garbagereadexc : public exception { const char * what () const throw () { return "Trying to read garbage from not 																						filled memory.\n"; } };
+
 template <class TYPE> class data_structure
 {
 	public:
