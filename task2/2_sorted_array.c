@@ -216,3 +216,11 @@ template <class TYPE> class array: public data_structure <int>
 		return 1;
 	}
 };
+
+template <class TYPE> class sorted_array: public array <int>
+{
+	public:
+	
+	 sorted_array (): array () { }
+	~sorted_array () { }
+};
