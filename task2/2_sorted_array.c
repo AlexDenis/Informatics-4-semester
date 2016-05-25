@@ -68,4 +68,21 @@ template <class TYPE> class alternative_array: public data_structure <int>
 	{
 		return 1;
 	}
+	
+	int get_datalen ()
+	{
+		vec.size ();
+	}
+	
+	int add_element (TYPE new_element)
+	{
+		return vec.push_back (new_element);
+	}
+
+	int remove_element_from_end ()
+	{
+		vec.pop_back ();
+		
+		return 1;
+	}
 };
