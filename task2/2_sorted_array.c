@@ -139,4 +139,17 @@ template <class TYPE> class array: public data_structure <int>
 	
 		return success;
 	}
+	
+	int remove_element_from_end ()
+	{
+		datalen --;
+	
+		return 1;
+	}
+
+	int change_element (int ind, TYPE new_element)
+	{
+		data [ind] = new_element;
+		return 1;
+	}
 };
