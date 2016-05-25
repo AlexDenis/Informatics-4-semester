@@ -95,4 +95,28 @@ template <class TYPE> class array: public data_structure <int>
 	
 	 array (): data_structure () {}
 	~array () {}
-}
+	
+	int init_array ()
+	{
+		data    = 0;
+		memlen  = 0;
+		datalen = 0;
+		
+		int suc = change_memsz (DEF_LEN);
+		
+		arrays_count ++;
+		
+		return suc;
+	}
+
+	int delete_array ()
+	{
+		free (data);
+		datalen = 0;
+		memlen  = 0;
+	
+		arrays_count --;
+		
+		return 1;
+	}
+};
