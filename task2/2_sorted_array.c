@@ -56,4 +56,5 @@ template <class TYPE> class alternative_array: public data_structure <int>
 	
 	alternative_array (): data_structure () {}
 	~alternative_array () {}
-}
+	
+};
