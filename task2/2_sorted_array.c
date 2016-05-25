@@ -45,3 +45,15 @@ template <class TYPE> class data_structure
 		return 1;
 	}
 };
+
+template <class TYPE> class alternative_array: public data_structure <int>
+{
+	private:
+	
+	std::vector<TYPE> vec;
+	
+	public:
+	
+	alternative_array (): data_structure () {}
+	~alternative_array () {}
+}
