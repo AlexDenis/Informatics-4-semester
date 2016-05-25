@@ -152,4 +152,36 @@ template <class TYPE> class array: public data_structure <int>
 		data [ind] = new_element;
 		return 1;
 	}
+	
+	int zero_array ()
+	{
+		int i = 0;
+		for (; i < datalen; i ++) data [i] = 0;
+		datalen = 0;
+	
+		return 1;
+	}
+	
+	int bubble_sort ()
+	{
+		for (int i = datalen; i > 0; i --)
+		{
+			for (int j = 0; j < i - 1; j ++)
+			{
+				if (data [j] < data [j + 1])
+				{
+					TYPE temp    = data [j];
+					data [j]     = data [j + 1];
+					data [j + 1] = temp;
+				}
+			}
+		}
+	
+		int success = 1;
+	
+		for (int i = 0; i < datalen - 1; i ++)
+			if (data [i] < data [i + 1]) success = 0;
+		
+		return success;
+	}
 };
