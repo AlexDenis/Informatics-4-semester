@@ -57,4 +57,15 @@ template <class TYPE> class alternative_array: public data_structure <int>
 	alternative_array (): data_structure () {}
 	~alternative_array () {}
 	
+	int init_array ()
+	{	
+		arrays_count ++;
+		
+		return 1;
+	}
+
+	int delete_array ()
+	{
+		return 1;
+	}
 };
