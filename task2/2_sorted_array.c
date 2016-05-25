@@ -86,3 +86,13 @@ template <class TYPE> class alternative_array: public data_structure <int>
 		return 1;
 	}
 };
+
+template <class TYPE> class array: public data_structure <int>
+{
+	private:
+	
+	public:
+	
+	 array (): data_structure () {}
+	~array () {}
+}
