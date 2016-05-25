@@ -1,0 +1,26 @@
+#include "array.cpp"
+
+#define try_check( CALL ) \
+try \
+{ \
+CALL;\
+} \
+catch (exception& ex) \
+{ \
+	fprintf (stderr, "%s", ex.what ()); \
+	err_count ++; \
+} \
+tests_passed ++;
+
+int main ()
+{
+	int err_count    = 0;
+	int tests_passed = 0;
+	
+	array <int>* array1 = new array <int> ();
+	array <int>* array2 = new array <int> ();
+	
+	try_check (array1->init_array ());
+	
+	return 0;
+}
