@@ -184,4 +184,35 @@ template <class TYPE> class array: public data_structure <int>
 		
 		return success;
 	}
+	
+	int print_element (int ind)
+	{
+		printf ("%i", data [ind]);
+	
+		return 1;
+	}
+
+	int print_array ()
+	{
+		for (int i = 0; i < datalen; i ++)
+		{
+			print_element (i);
+			printf (" ");
+		}
+	
+		printf ("\n");
+	
+		return 1;
+	}
+
+	int verbose_full_print ()
+	{
+		printf ("---------------------------------------------------------------\n");
+		printf ("Printing data about obj at %x: \nAllocated memory %i bytes (for %i elements), used %i b, %i el.\n",
+			this, (memlen) * sizeof (TYPE), memlen, (datalen) * sizeof (TYPE), datalen);
+		printf ("Printing data in the array:\n");
+		print_array ();
+	
+		return 1;
+	}
 };
