@@ -119,4 +119,24 @@ template <class TYPE> class array: public data_structure <int>
 		
 		return 1;
 	}
+	
+	int add_element (TYPE new_element)
+	{
+		return add_element_to_end (new_element);
+	}
+	
+	int add_element_to_end (TYPE new_element)
+	{
+		int success = 1;
+	
+		if (datalen + 1 >= memlen)
+		{
+			success = change_memsz (memlen + MEM_STEP);
+		}
+	
+		if (success == 1) data [datalen ++] = new_element;
+		//else fprintf (stderr, ERRORS [ELEMENT_NOT_ADDED]);
+	
+		return success;
+	}
 };
