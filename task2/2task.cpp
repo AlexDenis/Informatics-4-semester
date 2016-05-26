@@ -68,7 +68,6 @@ int main ()
 	
 	delete array1;
 	delete array2;	
-	delete sarr;
 	
 	return 0;
 }
