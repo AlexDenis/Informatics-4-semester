@@ -40,7 +40,36 @@ int main ()
 	try_check (array1 -> remove_element_from_end ())
 	
 	try_check (array1 -> print_array ())
-
+	
+	sorted_array <int>* sarr = new sorted_array <int> ();
+	sarr -> init_array ();
+	sarr -> add_element (5);
+	try_check (sarr -> search (5) == 1)
+	printf ("search result is %i\n", sarr -> search (5));
+	sarr -> delete_array ();
+	delete sarr;
+	
+	try_check (array1 -> bubble_sort ())
+	try_check (array1 -> print_array ())
+	
+	try_check (array1 -> change_element (3, 7))
+	try_check (array1 -> print_array    ())
+	
+	try_check (array1 -> zero_array  ())
+	try_check (array1 -> print_array ())
+	printf ("datalen = %i, memlen = %i\n", array1 -> get_datalen (), array1 -> get_memlen ());
+	
+	for (int i = 0; i < MAX_DATASZ - 70; i ++)
+		array1 -> add_element_to_end (41);
+	
+	try_check (array1 -> delete_array ())
+	print_exit_message ();
+	try_check (array2 -> delete_array ())
+	print_exit_message ();
+	
+	delete array1;
+	delete array2;	
+	delete sarr;
 	
 	return 0;
 }
