@@ -1,11 +1,10 @@
-#include "array.cpp"
+#include "2_sorted_array.cpp"
 
 #define try_check( CALL ) \
 try \
 { \
 CALL;\
 } \
-
 catch (exception& ex) \
 { \
 	fprintf (stderr, "%s", ex.what ()); \
