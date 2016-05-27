@@ -1,16 +1,16 @@
 CFLAGS=-fprofile-arcs -ftest-coverage -std=c99 -g 
 
-1task.o: 1task.c
-	gcc $(CFLAGS) 1task.c
+1task: sorted_array.o 1task.o
+	gcc $(CFLAGS) 1task.o sorted_array.o -o 1task
 
-sorted_array.o: sorted_array.h
-	gcc $(CFLAGS) sorted_array.h
-	
-1task: 1task.o sorted_array.o 
-	gcc $(CFLAGS) 1task.o sorted_array.o
+sorted_array.o: sorted_array.c
+	gcc -c $(CFLAGS) sorted_array.c
+
+1task.o: 1task.c
+	gcc -c $(CFLAGS) 1task.c
 
 clean:
 	rm -rf *.gcov
 	rm -rf *.gcda
 	rm -rf *.gcno
-	rm -rf *.o 1task
+	rm -rf *.o sorted_array 1task
