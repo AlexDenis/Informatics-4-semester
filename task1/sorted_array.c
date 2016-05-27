@@ -4,26 +4,28 @@
 #include "assert.h"
 #include "sorted_array.h"
 
-#define check(COND) { if (COND) { } else { fprintf (stderr, "Condition '%s' is false!\n", #COND); assert (0); } }
 
 //gcc -fprofile-arcs -ftest-coverage -std=c99 1task.c -o 1task
 //gcov -b ./1task.c | tee output.txt
 //valgrind --leak-check=full --leak-resolution=med ./1task
 
+int arrays_count = 0;
+
+const char* ERRORS [] = {"Massive was succesfully created",
+						 "No errors occured",
+			 			 "Unable to allocate memory for %i elements, max count is %i\n",
+						 "Element not added",
+						 "Trying to write to unallocated memory - element %i. Max number is %i.\n",
+						 "Trying to read garbage from not filled memory at index %i. Max ind %i",
+						 "Element %i not found", 
+						 "You've got invalid pointer"};
+
 const int DEF_LEN    = 10;
 const int MEM_STEP   = 10;
 const int MAX_DATASZ = 301; 
 
-int arrays_count = 0;
 const char* OK_EXITING = "You've deleted all the arrays.\n";
 const char* NOT_OK_EXITING = "You've not deleted all the arrays.\n'";
-
-struct array
-{
-	TYPE* data;
-	int memlen;
-	int datalen;
-};
 
 void print_exit_message ()
 {

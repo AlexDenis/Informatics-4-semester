@@ -1,3 +1,9 @@
+#ifndef sort_arr
+#define sort_arr
+
+#define check(COND) { if (COND) { } else { fprintf (stderr, "Condition '%s' is false!\n", #COND); assert (0); } }
+
+
 typedef int TYPE;
 
 void print_exit_message ();
@@ -10,18 +16,14 @@ enum {SUCCESFULLY_CREATED,
       GARBAGE_READ,
       ELEMENT_NOT_FOUND,
       INVALID_POINTER};
-      
-const char* ERRORS [] = {"Massive was succesfully created",
-						 "No errors occured",
-			 			 "Unable to allocate memory for %i elements, max count is %i\n",
-						 "Element not added",
-						 "Trying to write to unallocated memory - element %i. Max number is %i.\n",
-						 "Trying to read garbage from not filled memory at index %i. Max ind %i",
-						 "Element %i not found", 
-						 "You've got invalid pointer"};
 
-struct array;
-
+//struct array;
+struct array
+{
+	TYPE* data;
+	int memlen;
+	int datalen;
+};
 //MEMORY CONTROL
 int change_memsz (struct array* inp, int newmemlen);
 int init_array (struct array* inp);
@@ -44,3 +46,4 @@ int print_element (struct array* inp, int ind);
 int print_array (struct array* inp);
 int verbose_full_print (struct array* inp);
 
+#endif

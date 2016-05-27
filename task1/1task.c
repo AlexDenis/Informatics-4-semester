@@ -1,4 +1,7 @@
-#include "sorted_array.c"
+#include "stdio.h"
+#include "malloc.h"
+#include "assert.h"
+#include "sorted_array.h"
 
 // print name of function + "the right output of error"
 
@@ -6,8 +9,17 @@
 if (FUNC != CORRECT_ERR_CODE) { \
 printf ("Unexpected error or absence of expected error!\n"); \
  notpassed ++;} \
- else { printf ("Function %s created with right error code '%s'.\n", #FUNC, ERRORS[CORRECT_ERR_CODE]); \
+ else { printf ("Function %s created with right error code '%s'.\n", #FUNC, ERRORS_1[CORRECT_ERR_CODE]); \
  passed ++;}
+ 
+ const char* ERRORS_1 [] = {"Massive was succesfully created",
+						 "No errors occured",
+			 			 "Unable to allocate memory for %i elements, max count is %i\n",
+						 "Element not added",
+						 "Trying to write to unallocated memory - element %i. Max number is %i.\n",
+						 "Trying to read garbage from not filled memory at index %i. Max ind %i",
+						 "Element %i not found", 
+						 "You've got invalid pointer"};
  
 int main ()
 {
@@ -52,8 +64,8 @@ int main ()
 	
 	printf ("datalen = %i, memlen = %i\n", get_datalen (&array1), get_memlen (&array1));
 	
-	for (int i = 0; i < MAX_DATASZ + 5; i ++)
-		/*check (*/add_element (&array1, 41);//)
+	/*for (int i = 0; i < MAX_DATASZ + 5; i ++)
+		check (add_element (&array1, 41);//) */
 	
 	printf ("Passed %i, not passed %i.\n", passed, notpassed);
 	
