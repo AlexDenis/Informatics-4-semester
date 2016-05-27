@@ -1,9 +1,16 @@
-all:
-	gcc -fprofile-arcs -ftest-coverage -std=c99 1task.c sorted_array.h -o 1task
-	./1task
-	valgrind --leak-check=full --leak-resolution=med ./1task
-	gcov -b ./1task.c | tee output.txt
-clean:	
+CFLAGS=-fprofile-arcs -ftest-coverage -std=c99 -g 
+
+1task.o: 1task.c
+	gcc $(CFLAGS) 1task.c
+
+sorted_array.o: sorted_array.h
+	gcc $(CFLAGS) sorted_array.h
+	
+1task: 1task.o sorted_array.o 
+	gcc $(CFLAGS) 1task.o sorted_array.o
+
+clean:
 	rm -rf *.gcov
-	rm -rf *.gcno
 	rm -rf *.gcda
+	rm -rf *.gcno
+	rm -rf *.o 1task
