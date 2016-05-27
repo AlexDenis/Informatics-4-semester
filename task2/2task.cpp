@@ -1,4 +1,4 @@
-#include "2_sorted_array.cpp"
+#include "2_sorted_array.h"
 
 #define try_check( CALL ) \
 try \
@@ -58,8 +58,8 @@ int main ()
 	try_check (array1 -> print_array ())
 	printf ("datalen = %i, memlen = %i\n", array1 -> get_datalen (), array1 -> get_memlen ());
 	
-	for (int i = 0; i < MAX_DATASZ - 70; i ++)
-		array1 -> add_element_to_end (41);
+	/*for (int i = 0; i < MAX_DATASZ - 70; i ++)
+		array1 -> add_element_to_end (41);*/
 	
 	try_check (array1 -> delete_array ())
 	print_exit_message ();
