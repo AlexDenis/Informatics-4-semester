@@ -3,7 +3,6 @@
 #include "assert.h"
 #include "sorted_array.h"
 
-// print name of function + "the right output of error"
 
 #define test( FUNC, CORRECT_ERR_CODE ) \
 if (FUNC != CORRECT_ERR_CODE) { \
@@ -36,11 +35,17 @@ int main ()
 	
 	test (change_element(&array1, 12, 33), WRITE_TO_UNALLOCATED_MEMORY)
 	
+	test (change_element(&array1, 1, 33), NO_ERRORS)
+	
 	test (add_element (&array1, 41), NO_ERRORS)
 	
 	test (add_element (&array1, 3), NO_ERRORS)
 	
 	test (add_element (&array1, 9), NO_ERRORS)
+	
+	//test (find_element(&array1, 2), NO_ERRORS)
+	
+	test (elements_sum (&array1), NO_ERRORS)
 	
 	test (add_element (&array1, 13), NO_ERRORS)
 	
@@ -54,9 +59,9 @@ int main ()
 	
 	test (print_array (&array1), NO_ERRORS)
 	
-	test (change_element(&array1, 2, 69), NO_ERRORS)
-	
 	test (print_array (&array1), NO_ERRORS)
+	
+	test (print_element(&array1, 40), GARBAGE_READ)
 	
 	test (zero_array   (&array1), NO_ERRORS)
 	
@@ -64,8 +69,8 @@ int main ()
 	
 	printf ("datalen = %i, memlen = %i\n", get_datalen (&array1), get_memlen (&array1));
 	
-	/*for (int i = 0; i < MAX_DATASZ + 5; i ++)
-		check (add_element (&array1, 41);//) */
+	for (int i = 0; i < 305; i ++)
+		check (add_element (&array1, 41)); 
 	
 	printf ("Passed %i, not passed %i.\n", passed, notpassed);
 	
