@@ -18,24 +18,6 @@ int arrays_count = 0;
 const char* OK_EXITING = "You've deleted all the arrays.\n";
 const char* NOT_OK_EXITING = "You've not deleted all the arrays.\n'";
 
-enum {SUCCESFULLY_CREATED,
-	  NO_ERRORS,
-	  UNABLE_TO_ALLOCATE_MEMORY,
-      ELEMENT_NOT_ADDED,
-      WRITE_TO_UNALLOCATED_MEMORY,
-      GARBAGE_READ,
-      ELEMENT_NOT_FOUND,
-      INVALID_POINTER};
-      
-const char* ERRORS [] = {"Massive was succesfully created",
-						 "No errors occured",
-			 			 "Unable to allocate memory for %i elements, max count is %i\n",
-						 "Element not added",
-						 "Trying to write to unallocated memory - element %i. Max number is %i.\n",
-						 "Trying to read garbage from not filled memory at index %i. Max ind %i",
-						 "Element %i not found", 
-						 "You've got invalid pointer"};
-
 struct array
 {
 	TYPE* data;
