@@ -1,4 +1,3 @@
-// test после каждого check'a, код выполнения без ошибки в ENUM
 #include "stdio.h"
 #include "malloc.h"
 #include "assert.h"
@@ -6,7 +5,7 @@
 
 
 //gcc -fprofile-arcs -ftest-coverage -std=c99 1task.c -o 1task
-//gcov -b ./1task.c | tee output.txt
+//gcov -b ./sorted_array.c | tee output.txt
 //valgrind --leak-check=full --leak-resolution=med ./1task
 
 int arrays_count = 0;
@@ -26,6 +25,8 @@ const int MAX_DATASZ = 301;
 
 const char* OK_EXITING = "You've deleted all the arrays.\n";
 const char* NOT_OK_EXITING = "You've not deleted all the arrays.\n'";
+
+
 
 void print_exit_message ()
 {
@@ -51,7 +52,9 @@ int change_memsz (struct array* inp, int newmemlen)
 	
 	else if (inp -> memlen == 0)
 	{
+		
 		inp -> data = (TYPE*) calloc (newmemlen, sizeof(TYPE));
+		if (!inp->data) return UNABLE_TO_ALLOCATE_MEMORY;
 		inp -> memlen = newmemlen;
 	}
 	
@@ -59,6 +62,7 @@ int change_memsz (struct array* inp, int newmemlen)
 	{
 		printf ("reallocating with new mem len %i\n", newmemlen);
 		inp -> data = (TYPE*) realloc (inp -> data, newmemlen * sizeof (TYPE));
+		if (!inp->data) return UNABLE_TO_ALLOCATE_MEMORY;
 		inp -> memlen = newmemlen;
 	}
 	
@@ -191,6 +195,22 @@ int change_element (struct array* inp, int ind, TYPE new_element)
 		inp -> data [ind] = new_element;
 		return NO_ERRORS;
 	}
+}
+
+int elements_sum (struct array* inp)
+{
+	check (pointer_valid(inp))
+	
+	TYPE sum = 0;
+	
+	for (int counter = 0; counter < inp -> datalen; counter++)
+	{
+		sum += inp -> data[counter];
+	}
+	
+	printf ("Sum of elements is %d", sum);
+	
+	return NO_ERRORS;
 }
 
 int get_datalen (struct array* inp)

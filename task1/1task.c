@@ -43,7 +43,6 @@ int main ()
 	
 	test (add_element (&array1, 9), NO_ERRORS)
 	
-	//test (find_element(&array1, 2), NO_ERRORS)
 	
 	test (elements_sum (&array1), NO_ERRORS)
 	
