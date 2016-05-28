@@ -5,6 +5,10 @@
 #include <exception>
 #include <vector>
 
+//gcc -fprofile-arcs -ftest-coverage -std=c99 2task.cpp -o 2task
+//gcov -b ./2task.cpp | tee output.txt
+//valgrind --leak-check=full --leak-resolution=med ./1task
+
 using namespace std;
 
 #define check(COND) { if (COND) { } else { fprintf (stderr, "Condition '%s' is false!\n", #COND); assert (0); } }
