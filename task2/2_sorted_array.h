@@ -44,8 +44,8 @@ template <class TYPE> class data_structure
 	int memlen;
 	int datalen;
 	
-	 data_structure () { }
-	~data_structure () { }
+	//data_structure () { }
+	//~data_structure () { }
 	
 	virtual int get_datalen ();
 	int get_memlen ();
@@ -54,19 +54,19 @@ template <class TYPE> class data_structure
 };
 
 template <class TYPE>
-int data_structure::get_datalen ()
+int data_structure <TYPE> :: get_datalen ()
 {
 		return datalen;
 }
 
 template <class TYPE>	
-int data_structure::get_memlen ()
+int data_structure <TYPE> :: get_memlen ()
 {
 		return memlen;
 }
 
 template <class TYPE>
-int data_structure::change_memsz (TYPE newmemlen)
+int data_structure <TYPE> :: change_memsz (TYPE newmemlen)
 {
 	if (memlen == 0)
 	{
@@ -90,7 +90,7 @@ int data_structure::change_memsz (TYPE newmemlen)
 
 // ------------------ALTERNATIVE ARRAY -------------------------------
 
-template <class TYPE> class alternative_array: public data_structure <int>
+template <class TYPE> class alternative_array: public data_structure <TYPE>
 {
 	private:
 	
@@ -98,8 +98,8 @@ template <class TYPE> class alternative_array: public data_structure <int>
 	
 	public:
 	
-	alternative_array (): data_structure () {}
-	~alternative_array () {}
+	//alternative_array (): data_structure () {}
+	//~alternative_array () {}
 	
 	int init_array ();
 	int delete_array ();
@@ -109,7 +109,7 @@ template <class TYPE> class alternative_array: public data_structure <int>
 };
 
 template <class TYPE>
-int alternative_array::init_array ()
+int alternative_array <TYPE> :: init_array ()
 {	
 	arrays_count ++;
 		
@@ -117,25 +117,25 @@ int alternative_array::init_array ()
 }
 
 template <class TYPE>
-int alternative_array::delete_array ()
+int alternative_array <TYPE> :: delete_array ()
 {
 	return 1;
 }
 
 template <class TYPE>
-int alternative_array::get_datalen ()
+int alternative_array <TYPE> :: get_datalen ()
 {
-	vec.size ();
+	return vec.size ();
 }
 
 template <class TYPE>
-int alternative_array::add_element (TYPE new_element)
+int alternative_array <TYPE> ::add_element (TYPE new_element)
 {
 	return vec.push_back (new_element);
 }
 
 template <class TYPE>
-int alternative_array::remove_element_from_end ()
+int alternative_array <TYPE> ::remove_element_from_end ()
 {
 	vec.pop_back ();
 		
@@ -144,14 +144,14 @@ int alternative_array::remove_element_from_end ()
 
 //----------ARRAY------------------------------------------------------
 
-template <class TYPE> class array: public data_structure <int>
+template <class TYPE> class array: public data_structure <TYPE>
 {
 	private:
 	
 	public:
 	
-	 array (): data_structure () {}
-	~array () {}
+	//array (): data_structure () {}
+	//~array () {}
 	
 	int init_array ();
 	int delete_array ();
@@ -167,13 +167,13 @@ template <class TYPE> class array: public data_structure <int>
 };
 
 template <class TYPE>
-int array::init_array ()
+int array <TYPE> :: init_array ()
 {
-	data    = 0;
-	memlen  = 0;
-	datalen = 0;
+	this->data    = 0;
+	this->memlen  = 0;
+	this->datalen = 0;
 		
-	int suc = change_memsz (DEF_LEN);
+	int suc = this->change_memsz (DEF_LEN);
 		
 	arrays_count ++;
 		
@@ -181,11 +181,11 @@ int array::init_array ()
 }
 
 template <class TYPE>
-int array::delete_array ()
+int array <TYPE> :: delete_array ()
 {
-	free (data);
-	datalen = 0;
-	memlen  = 0;
+	free (this->data);
+	this->datalen = 0;
+	this->memlen  = 0;
 	
 	arrays_count --;
 		
@@ -193,87 +193,87 @@ int array::delete_array ()
 }
 
 template <class TYPE>
-int array::add_element (TYPE new_element)
+int array <TYPE> :: add_element (TYPE new_element)
 {
 	return add_element_to_end (new_element);
 }
 
 template <class TYPE>
-int array::add_element_to_end (TYPE new_element)
+int array <TYPE> :: add_element_to_end (TYPE new_element)
 {
 	int success = 1;
 	
-	if (datalen + 1 >= memlen)
+	if (this->datalen + 1 >= this->memlen)
 	{
-		success = change_memsz (memlen + MEM_STEP);
+		success = this->change_memsz (this->memlen + MEM_STEP);
 	}
 	
-	if (success == 1) data [datalen ++] = new_element;
+	if (success == 1) this->data [this->datalen ++] = new_element;
 	
 	return success;
 }
 
 template <class TYPE>
-int array::remove_element_from_end ()
+int array <TYPE> :: remove_element_from_end ()
 {
-	datalen --;
+	this->datalen --;
 	
 	return 1;
 }
 
 template <class TYPE>
-int array::change_element (int ind, TYPE new_element)
+int array <TYPE> :: change_element (int ind, TYPE new_element)
 {
-	data [ind] = new_element;
+	this->data [ind] = new_element;
 	return 1;
 }
 
 template <class TYPE>
-int array::zero_array ()
+int array <TYPE> :: zero_array ()
 {
 	int i = 0;
-	for (; i < datalen; i ++) data [i] = 0;
-	datalen = 0;
+	for (; i < this->datalen; i ++) this->data [i] = 0;
+	this->datalen = 0;
 	
 	return 1;
 }
 
 template <class TYPE>
-int array::bubble_sort ()
+int array <TYPE> :: bubble_sort ()
 {
-	for (int i = datalen; i > 0; i --)
+	for (int i = this->datalen; i > 0; i --)
 	{
 		for (int j = 0; j < i - 1; j ++)
 		{
-			if (data [j] < data [j + 1])
+			if (this->data [j] < this->data [j + 1])
 			{
-				TYPE temp    = data [j];
-				data [j]     = data [j + 1];
-				data [j + 1] = temp;
+				TYPE temp = this->data [j];
+				this->data [j] = this->data [j + 1];
+				this->data [j + 1] = temp;
 			}
 		}
 	}
 	
 	int success = 1;
 
-	for (int i = 0; i < datalen - 1; i ++)
-		if (data [i] < data [i + 1]) success = 0;
+	for (int i = 0; i < this->datalen - 1; i ++)
+		if (this->data [i] < this->data [i + 1]) success = 0;
 		
 	return success;
 }
 
 template <class TYPE>
-int array::print_element (int ind)
+int array <TYPE> :: print_element (int ind)
 {
-	printf ("%i", data [ind]);
+	printf ("%i", this->data [ind]);
 	
 	return 1;
 }
 
 template <class TYPE>
-int array::print_array ()
+int array <TYPE> :: print_array ()
 {
-	for (int i = 0; i < datalen; i ++)
+	for (int i = 0; i < this->datalen; i ++)
 	{
 		print_element (i);
 		printf (" ");
@@ -285,11 +285,11 @@ int array::print_array ()
 }
 
 template <class TYPE>
-int array::verbose_full_print ()
+int array <TYPE> :: verbose_full_print ()
 {
 	printf ("---------------------------------------------------------------\n");
 	printf ("Printing data about obj at %x: \nAllocated memory %i bytes (for %i elements), used %i b, %i el.\n",
-		this, (memlen) * sizeof (TYPE), memlen, (datalen) * sizeof (TYPE), datalen);
+		this, (this->memlen) * sizeof (TYPE), this->memlen, (this->datalen) * sizeof (TYPE), this->datalen);
 	printf ("Printing data in the array:\n");
 	print_array ();
 	
@@ -298,30 +298,30 @@ int array::verbose_full_print ()
 
 //-------------------SORTED ARRAY------------------------------------------------------
 
-template <class TYPE> class sorted_array: public array <int>
+template <class TYPE> class sorted_array: public array <TYPE>
 {
 	public:
 	
-	 sorted_array (): array () { }
-	~sorted_array () { }
+	//sorted_array (): array () { }
+	//~sorted_array () { }
 	
 	int add_element (TYPE new_element);
 	int search (TYPE val);
 };
 
 template <class TYPE>
-int sorted_array::add_element (TYPE new_element)
+int sorted_array <TYPE> :: add_element (TYPE new_element)
 {
-	add_element_to_end (new_element);
-	bubble_sort ();
+	this->add_element_to_end (new_element);
+	this->bubble_sort ();
 }
 
 template <class TYPE>
-int sorted_array::search (TYPE val)
+int sorted_array <TYPE> :: search (TYPE val)
 {
 	int ind = -1;
 		
-	for (int i = 0; i < datalen; i ++)
-		if (data [i] == val)
+	for (int i = 0; i < this->datalen; i ++)
+		if (this->data [i] == val)
 			ind = i;
 }

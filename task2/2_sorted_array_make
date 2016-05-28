@@ -7,4 +7,3 @@ clean:
 	rm -rf *.gcov
 	rm -rf *.gcda
 	rm -rf *.gcno
-	rm -rf *.o 2task
